@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchTrending } from '../../utils/fetchMovies';
+import { fetchTrending } from '../../utils/APIHandlers';
 import css from './Home.module.css';
 
 const Home = () => {
@@ -13,7 +13,7 @@ const Home = () => {
       const list = responseData.results.map(movie => {
         return (
           <li key={movie.id}>
-            <Link to={'/movies' + movie.id}>{movie.title}</Link>
+            <Link to={'/movies/' + movie.id}>{movie.title}</Link>
           </li>
         );
       });

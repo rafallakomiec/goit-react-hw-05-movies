@@ -3,8 +3,8 @@ import SharedLayout from "./pages/SharedLayout";
 import { Suspense, lazy } from "react";
 import css from './App.module.css';
 
-const Home = lazy(() => import('./components/Home/Home'));
-const Movies = lazy(() => import('./components/Movie/Movie'));
+const Home = lazy(() => import('./pages/Home/Home'));
+const Movies = lazy(() => import('./pages/Movies/Movies'));
 
 const App = () => {
   return (

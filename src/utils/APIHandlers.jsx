@@ -10,7 +10,7 @@ const options = {
 
 const fetchTrending = async () => { 
     try {
-      const response = await axios('3/trending/movie/day?language=en-US', options);
+      const response = await axios('3/trending/movie/day', options);
       if (response.status !== 200) throw new Error(response.statusText);
       return response.data;
     } catch (error) {
@@ -18,4 +18,19 @@ const fetchTrending = async () => {
     }
 };
 
-export {fetchTrending};
+const fetchMovies = async (query) => {
+  try {
+    const response = await axios('3/search/movie', {
+      ...options,
+      params: {
+        query: query
+      }
+    });
+    if (response.status !== 200) throw new Error(response.statusText);
+    return response.data;
+  } catch (error) {
+    alert(`Error occured: ${error}. Please try again.`);
+  }
+}
+
+export {fetchTrending, fetchMovies};
