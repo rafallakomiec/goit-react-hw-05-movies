@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import Search from '../../components/Search/Search';
 import { fetchMovies } from '../../utils/APIHandlers';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useLocation } from 'react-router-dom';
 import css from './Movies.modules.css';
 
 const Movies = () => {
   const submitRef = useRef();
+  const location = useLocation();
 
   const { searchQuery, setSearchQuery } = useState('');
   const { isLoading, setIsLoading } = useState(false);
@@ -33,7 +34,7 @@ const Movies = () => {
     const list = responseData.results.map(movie => {
       return (
         <li key={movie.id}>
-          <Link to={'/movie/' + movie.id}>{movie.title}</Link>
+          <Link to={'/movie/' + movie.id} state={{ back: location }}>{movie.title}</Link>
         </li>
       );
     });
