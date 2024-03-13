@@ -1,0 +1,21 @@
+.fallback {
+    margin: 0 auto;
+    font-size: 24px;
+    color: black;
+    text-align: center;
+}
+.subtitle {
+    composes: fallback;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.list {
+    margin-left: 80px;
+}
+
+.item {
+  color: blue;
+  font-size: 18px;
+}
