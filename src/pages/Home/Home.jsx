@@ -13,7 +13,7 @@ const Home = () => {
       const list = responseData.results.map(movie => {
         return (
           <li key={movie.id}>
-            <Link to={'/movies/' + movie.id}>{movie.title}</Link>
+            <Link to={'/movie/' + movie.id}>{movie.title}</Link>
           </li>
         );
       });
