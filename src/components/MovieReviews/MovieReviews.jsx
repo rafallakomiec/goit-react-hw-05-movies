@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { fetchReviews } from '../../utils/APIHandlers';
 
 const MovieReviews = ({ id }) => {
-  const { reviews, setReviews } = useState([]);
-  const { isLoading, setIsLoading } = useState(true);
+  const [ reviews, setReviews ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const responseData = fetchReviews(id);
+      const responseData = await fetchReviews(id);
       const list = responseData.results.map(item => {
         return (
           <li key={item.id}>
@@ -20,7 +20,7 @@ const MovieReviews = ({ id }) => {
       setReviews(list);
       setIsLoading(false);
     })();
-  });
+  }, [id]);
 
   return (
     <>

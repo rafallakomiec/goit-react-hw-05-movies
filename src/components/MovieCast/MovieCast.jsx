@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { fetchCast } from '../../utils/APIHandlers';
 
 const MovieCast = ({ id }) => {
-  const { cast, setCast } = useState([]);
-  const { isLoading, setIsLoading } = useState(true);
+  const [ cast, setCast ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -25,7 +25,7 @@ const MovieCast = ({ id }) => {
       setCast(list);
       setIsLoading(false);
     })();
-  });
+  }, [id]);
 
   return (
     <>

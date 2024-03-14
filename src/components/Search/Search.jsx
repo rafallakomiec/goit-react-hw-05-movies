@@ -1,18 +1,24 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-const Search = ({ query, onSubmitHandler, submitRef }) => {
+const Search = ({ query, onSubmit }) => {
+  const [queryField, setQueryField] = useState(query);
+
+  const onChangeHandler = (event) => {
+    setQueryField(event.target.value);
+  };
+
   return (
-    <form ref={submitRef} onSubmit={onSubmitHandler}>
-      <input type="text" placeholder="Type here to search" name="search" cols="400" value={query} />
+    <form onSubmit={onSubmit}>
+      <input type="text" placeholder="Type here to search" name="search" cols="400" value={queryField} onChange={onChangeHandler} />
       <input type="submit" value="Click to Search!" />
     </form>
   );
 };
 
 Search.propTypes = {
-  query: PropTypes.string.isRequired,
-  onSubmitHandler: PropTypes.func.isRequired,
-  submitRef: PropTypes.object.shape({ current: PropTypes.string.isRequired }),
+  query: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default Search;

@@ -1,25 +1,41 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Search from '../../components/Search/Search';
 import { fetchMovies } from '../../utils/APIHandlers';
 import { useSearchParams, Link, useLocation } from 'react-router-dom';
-import css from './Movies.modules.css';
+import css from './Movies.module.css';
 
 const Movies = () => {
-  const submitRef = useRef();
   const location = useLocation();
 
-  const { searchQuery, setSearchQuery } = useState('');
-  const { isLoading, setIsLoading } = useState(false);
-  const { moviesList, setMoviesList } = useState([]);
-  const { searchParams, setSearchParams } = useSearchParams();
+  const [ searchQuery, setSearchQuery ] = useState('');
+  const [ isLoading, setIsLoading ] = useState(false);
+  const [ moviesList, setMoviesList ] = useState([]);
+  const [ searchParams, setSearchParams ] = useSearchParams();
   const linkQuery = searchParams.get('query');
 
   useEffect(() => {
-    if (!linkQuery) {
+    if (linkQuery !== null && linkQuery !== searchQuery) {
       setSearchQuery(linkQuery);
-      submitRef?.submit();
     }
-  });
+  }, [linkQuery, searchQuery]);
+
+  useEffect(() => { 
+    (async () => {
+      setIsLoading(true);
+      const responseData = await fetchMovies(searchQuery);
+      const list = responseData.results.map(movie => {
+        return (
+          <li key={movie.id}>
+            <Link to={'/movies/' + movie.id} state={{ back: location }}>
+              {movie.title}
+            </Link>
+          </li>
+        );
+      });
+      setMoviesList(list);
+      setIsLoading(false);
+    })();
+  }, [searchQuery, location]);
 
   const onSubmitHandler = async event => {
     event.preventDefault();
@@ -28,23 +44,12 @@ const Movies = () => {
       return false;
     }
     setSearchQuery(event.target.search.value);
-    setSearchParams(event.target.search.value);
-    setIsLoading(true);
-    const responseData = await fetchMovies(event.target.search.value);
-    const list = responseData.results.map(movie => {
-      return (
-        <li key={movie.id}>
-          <Link to={'/movie/' + movie.id} state={{ back: location }}>{movie.title}</Link>
-        </li>
-      );
-    });
-    setMoviesList(list);
-    setIsLoading(false);
+    setSearchParams({ query: event.target.search.value });
   };
 
   return (
     <>
-      <Search query={searchQuery} onSubmit={onSubmitHandler} submitRef={submitRef} />
+      <Search query={searchQuery} onSubmit={onSubmitHandler} />
       {isLoading && (
         <div className={css.fallback}>
           Loading content...

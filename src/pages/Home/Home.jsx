@@ -4,8 +4,8 @@ import { fetchTrending } from '../../utils/APIHandlers';
 import css from './Home.module.css';
 
 const Home = () => {
-  const { isLoading, setIsLoading } = useState(true);
-  const { top20, setTop20 } = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
+  const [ top20, setTop20 ] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
@@ -14,14 +14,14 @@ const Home = () => {
       const list = responseData.results.map(movie => {
         return (
           <li key={movie.id}>
-            <Link to={'/movie/' + movie.id} state={{ back: location }}>{movie.title}</Link>
+            <Link to={'/movies/' + movie.id} state={{ back: location }}>{movie.title}</Link>
           </li>
         );
       });
       setTop20(list);
       setIsLoading(false);
     })();
-  });
+  }, [location]);
 
   return (
     <>
