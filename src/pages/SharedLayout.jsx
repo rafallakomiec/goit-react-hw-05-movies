@@ -23,7 +23,7 @@ const SharedLayout = ({children}) => {
         </Suspense>
       </main>
       <footer className={css.footer}>
-        <img src="./src/assets/tmdb.svg" width="200" />
+        <img src="./assets/tmdb.svg" width="200" />
       </footer>
     </>
   );
