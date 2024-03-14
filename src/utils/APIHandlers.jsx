@@ -31,7 +31,7 @@ const fetchMovies = async (query) => {
   } catch (error) {
     alert(`Error occured: ${error}. Please try again.`);
   }
-}
+};
 
 const fetchMovie = async (id) => {
   try {
@@ -46,7 +46,7 @@ const fetchMovie = async (id) => {
       </h2>
     );
   }
-}
+};
 
 const fetchCast = async (id) => {
   try {
@@ -61,6 +61,21 @@ const fetchCast = async (id) => {
       </h2>
     );
   }
-}
+};
 
-export {fetchTrending, fetchMovies, fetchMovie, fetchCast};
+const fetchReviews = async (id) => {
+  try {
+    const response = await axios('3/movie/' + id + '/reviews', options);
+    if (response.status !== 200) throw new Error(response.statusText);
+    return response.data;
+  } catch (error) {
+    return (
+      <h2>
+        Error occured: {error}.<br />
+        Please reload the page.
+      </h2>
+    );
+  }
+};
+
+export {fetchTrending, fetchMovies, fetchMovie, fetchCast, fetchReviews};
