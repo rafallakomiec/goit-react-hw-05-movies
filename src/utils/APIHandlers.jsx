@@ -45,7 +45,22 @@ const fetchMovie = async (id) => {
         Please reload the page.
       </h2>
     );
-}
+  }
 }
 
-export {fetchTrending, fetchMovies, fetchMovie};
+const fetchCast = async (id) => {
+  try {
+    const response = await axios('3/movie/' + id + '/credits', options);
+    if (response.status !== 200) throw new Error(response.statusText);
+    return response.data;
+  } catch (error) {
+    return (
+      <h2>
+        Error occured: {error}.<br />
+        Please reload the page.
+      </h2>
+    );
+  }
+}
+
+export {fetchTrending, fetchMovies, fetchMovie, fetchCast};
